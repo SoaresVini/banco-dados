@@ -54,6 +54,8 @@ Create Table Elenco(
 Create Table Critica(
  id_filme INT,
  cpf varchar(14),
+ nota INT NOT NULL,
+ descricao_nota varchar(256),
  FOREIGN KEY (id_filme) REFERENCES Filme(id_filme) ,
  FOREIGN KEY (cpf) REFERENCES Usuario(cpf) 
  );
@@ -78,6 +80,17 @@ values ('Aventura'),
 ('Suspense');
 
 
+insert into critica(nota, descricao_nota)
+values (10,'Muito bom'),
+(9,'bom'),
+(10,'muito bom '),
+(7,'aceitavel'),
+(5,'Ruim'),
+(8,'Gostei'),
+(1,'horrivel'),
+(2,'pessimo'),
+(10,'Muito bom');
+
 insert into produtora (nome_produtora) 
 values ('Dynabox'),
 ('Quamba'),
@@ -91,16 +104,16 @@ values ('Dynabox'),
 ('Eimbee');
 
 insert into usuario(cpf, nome_use, nascimento_use, email_use, tipo_use) 
-values ('1', 'Nerty', '2022-08-18', 'ncreigan0@paypal.com','critico' ),
- ('2', 'Tanhya', '2022-06-05', 'tblakey1@virginia.edu','padrão'),
-  ('3', 'Kessiah', '2022-07-30', 'klaidler2@blog.com','critico'),
- ('4', 'Axe', '2022-10-24', 'arendle3@behance.net','critico'),
- ('5', 'Rainer', '2022-09-10', 'rstubley4@amazon.co.jp','padrão'),
- ('6', 'Dierdre', '2022-10-29', 'dziebart5@parallels.com','padrão'),
- ('7', 'Mycah', '2022-02-07', 'mbareham6@storify.com','critico'),
- ('8', 'Uriah', '2022-10-08', 'utummasutti7@altervista.org','padrão'),
- ('9', 'Tynan', '2022-03-24', 'thayer8@acquirethisname.com','critico'),
- ('10', 'Brander', '2022-06-15', 'bstein9@plala.or.jp','critico');
+values (11011505181, 'Nerty', '2022-08-18', 'ncreigan0@paypal.com','critico' ),
+ (21235894610, 'Tanhya', '2022-06-05', 'tblakey1@virginia.edu','padrão'),
+  (310234567891, 'Kessiah', '2022-07-30', 'klaidler2@blog.com','critico'),
+ (41045697631, 'Axe', '2022-10-24', 'arendle3@behance.net','critico'),
+ (57895631074, 'Rainer', '2022-09-10', 'rstubley4@amazon.co.jp','padrão'),
+ (10237859876, 'Dierdre', '2022-10-29', 'dziebart5@parallels.com','padrão'),
+ (10246459876, 'Mycah', '2022-02-07', 'mbareham6@storify.com','critico'),
+ (10279459876, 'Uriah', '2022-10-08', 'utummasutti7@altervista.org','padrão'),
+ (10710659876, 'Tynan', '2022-03-24', 'thayer8@acquirethisname.com','critico'),
+ (10237159876, 'Brander', '2022-06-15', 'bstein9@plala.or.jp','critico');
 
 
 insert into ator(nome_ator)
@@ -145,6 +158,12 @@ UPDATE genero SET genero_filme='Ficcção cientifica'WHERE id_genero_filme=7;
 UPDATE genero SET genero_filme='Drama'WHERE id_genero_filme=10;
 UPDATE genero SET genero_filme='Suspense'WHERE id_genero_filme=1;
 
+UPDATE Critica SET nota=10,descricao_nota='muito bom' WHERE id_filme=2;
+UPDATE Critica SET descricao_nota='ruim, mas da para ver'WHERE id_filme=5;
+UPDATE Critica SET nota=1,descricao_nota='Melhor filme da minha vida' WHERE id_filme=2;
+UPDATE Critica SET descricao_nota='da para ver'WHERE id_filme=7;
+UPDATE Critica SET nota=5,descricao_nota='desisti no meo do caminho' WHERE id_filme=9;
+
 UPDATE produtora SET nome_produtora='Business Services'WHERE id_produtora=2 ;
 UPDATE produtora SET nome_produtora='Other fame' WHERE id_produtora=4;
 UPDATE produtora SET nome_produtora='Consumer'WHERE id_produtora=9;
@@ -169,11 +188,29 @@ UPDATE filme SET nome_filme='Liga da Justiça de Zack Snyder' WHERE id_filme=1;
 UPDATE filme SET duracao='240 min' WHERE id_filme=1;
 UPDATE filme SET nome_filme='Harry Potter e a Pedra Filosofal' WHERE id_filme=10;
 
+UPDATE premiacao SET motivo='Melhor CGI' WHERE id_premiacao_filme=6;
+UPDATE premiacao SET motivo='Melhor filme' WHERE id_premiacao_filme=4;
+UPDATE premiacao SET motivo='Melhor ator' WHERE id_premiacao_filme=2;
+UPDATE premiacao SET motivo='Melhor filme' WHERE id_premiacao_filme=1;
+UPDATE premiacao SET motivo='Melhor Roteiro' WHERE id_premiacao_filme=10;
+
 DELETE FROM filme WHERE id_filme=6;
 DELETE FROM filme WHERE id_filme=4;
 DELETE FROM filme WHERE id_filme=2;
 DELETE FROM filme WHERE id_filme=10;
 DELETE FROM filme WHERE id_filme=7;
+
+DELETE FROM Critica WHERE id_filme=6;
+DELETE FROM Critica WHERE id_filme=4;
+DELETE FROM Critica WHERE id_filme=2;
+DELETE FROM Critica WHERE id_filme=10;
+DELETE FROM Critica WHERE id_filme=7;
+
+DELETE FROM premiacao WHERE id_premiacao_filme=6;
+DELETE FROM premiacao WHERE id_premiacao_filme=4;
+DELETE FROM premiacao WHERE id_premiacao_filme=2;
+DELETE FROM premiacao WHERE id_premiacao_filme=10;
+DELETE FROM premiacao WHERE id_premiacao_filme=7;
 
 DELETE FROM ator WHERE id_ator=1;
 DELETE FROM ator WHERE id_ator=8;
@@ -201,51 +238,27 @@ DELETE FROM genero WHERE id_genero_filme=6;
 
 
 select * from genero order by id_genero_filme desc;
-
 select * from produtora order by id_produtora desc;
-
 select * from usuario order by cpf desc;
-
 select * from filme order by id_filme desc;
-
 select * from ator order by id_ator desc;
-
 select * from Premiacao order by id_premiacao_filme desc;
-
 select * from premiacao_filme order by id_premiacao_filme desc;
-
 select * from genero_filme order by id_genero_filme desc;
-
 select * from Critica order by id_filme desc;
-
 select * from Elenco order by id_filme desc;
 
-
-
 select * from genero WHERE id_genero_filme=8 ;
-
 select * from produtora  WHERE id_produtora=5 ;
-
 select * from usuario WHERE cpf=7 ;
-
 select * from filme WHERE id_filme=1 ;
-
 select * from ator WHERE id_ator=10 ;
-
 select * from Premiacao WHERE id_premiacao_filme=2 ;
-
 select * from premiacao_filme WHERE id_premiacao_filme=3 ;
-
 select * from genero_filme WHERE id_genero_filme=5 ;
-
 select * from Critica WHERE id_filme=4;
-
 select * from Elenco WHERE id_filme=6;
-
-
-
-
-
+select * from premiacao WHERE id_premiacao_filme=10;
 
 
 
